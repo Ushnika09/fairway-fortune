@@ -236,7 +236,8 @@ export const getResults = async (req, res) => {
   try {
     const results = await Result.find()
       .populate("userId", "name email")
-      .populate("drawId", "numbers createdAt");
+      .populate("drawId", "numbers createdAt")
+      .sort({ createdAt: -1 });
 
     return res.status(200).json({
       success: true,
@@ -265,24 +266,37 @@ export const approveResult = async (req, res) => {
       });
     }
 
-    const result = await Result.findById(resultId);
+    if (req.user.role !== "admin") {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied",
+      });
+    }
 
-    if (!result) {
+    const existing = await Result.findById(resultId);
+
+    if (!existing) {
       return res.status(404).json({
         success: false,
         message: "Result not found",
       });
     }
 
-    if (result.status === "approved") {
+    if (existing.status === "approved") {
       return res.status(409).json({
         success: false,
-        message: "Result already approved",
+        message: "Already approved",
       });
     }
 
-    result.status = "approved";
-    await result.save();
+    const result = await Result.findByIdAndUpdate(
+      resultId,
+      {
+        status: "approved",
+        approvedAt: new Date(),
+      },
+      { new: true }
+    );
 
     return res.status(200).json({
       success: true,
@@ -297,5 +311,15 @@ export const approveResult = async (req, res) => {
       success: false,
       message: "Internal server error",
     });
+  }
+};
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+
+    res.json({ users });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
   }
 };

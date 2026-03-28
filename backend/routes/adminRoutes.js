@@ -1,5 +1,5 @@
 import express from "express";
-import { addCharity, runDraw , getResults, approveResult } from "../controllers/adminController.js";
+import { addCharity, runDraw , getResults, approveResult, getAllUsers } from "../controllers/adminController.js";
 import { protect } from "../middleware/authMiddleware.js";
 import { adminOnly } from "../middleware/adminMiddleware.js";
 import { publishDraw } from "../controllers/adminController.js";
@@ -12,5 +12,6 @@ router.post("/draw/publish", protect, adminOnly, publishDraw);
 
 router.get("/results", protect, adminOnly, getResults);
 router.post("/result/approve", protect, adminOnly, approveResult);
+router.get("/results", protect, adminOnly, getAllUsers);
 
 export default router;

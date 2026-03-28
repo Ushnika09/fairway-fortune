@@ -1,0 +1,123 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Public pages
+import Landing from "./pages/Landing";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
+// User pages
+import Dashboard from "./pages/Dashboard";
+import Subscription from "./pages/Subscription";
+import Charity from "./pages/Charity";
+import Results from "./pages/Results";
+
+// Admin pages
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminUsers from "./pages/AdminUsers";
+import AdminCharities from "./pages/AdminCharities";
+import AdminDraw from "./pages/AdminDraw";
+import AdminResults from "./pages/AdminResults";
+
+// Route guards
+import ProtectedRoute from "./utils/ProtectedRoute";
+import AdminRoute from "./utils/AdminRoute";
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+
+        {/* 🌐 PUBLIC ROUTES */}
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* 👤 USER ROUTES */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/subscription"
+          element={
+            <ProtectedRoute>
+              <Subscription />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/charity"
+          element={
+            <ProtectedRoute>
+              <Charity />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/results"
+          element={
+            <ProtectedRoute>
+              <Results />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ⚙️ ADMIN ROUTES */}
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/users"
+          element={
+            <AdminRoute>
+              <AdminUsers />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/charities"
+          element={
+            <AdminRoute>
+              <AdminCharities />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/draw"
+          element={
+            <AdminRoute>
+              <AdminDraw />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/results"
+          element={
+            <AdminRoute>
+              <AdminResults />
+            </AdminRoute>
+          }
+        />
+
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
