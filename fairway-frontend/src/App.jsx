@@ -22,6 +22,9 @@ import AdminResults from "./pages/AdminResults";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import AdminRoute from "./utils/AdminRoute";
 
+// Context
+import { AdminProvider } from "./context/AdminContext";
+
 function App() {
   return (
     <BrowserRouter>
@@ -69,48 +72,20 @@ function App() {
           }
         />
 
-        {/* ⚙️ ADMIN ROUTES */}
+        {/* ⚙️ ADMIN ROUTES (WITH CONTEXT) */}
         <Route
-          path="/admin"
+          path="/admin/*"
           element={
             <AdminRoute>
-              <AdminDashboard />
-            </AdminRoute>
-          }
-        />
-
-        <Route
-          path="/admin/users"
-          element={
-            <AdminRoute>
-              <AdminUsers />
-            </AdminRoute>
-          }
-        />
-
-        <Route
-          path="/admin/charities"
-          element={
-            <AdminRoute>
-              <AdminCharities />
-            </AdminRoute>
-          }
-        />
-
-        <Route
-          path="/admin/draw"
-          element={
-            <AdminRoute>
-              <AdminDraw />
-            </AdminRoute>
-          }
-        />
-
-        <Route
-          path="/admin/results"
-          element={
-            <AdminRoute>
-              <AdminResults />
+              <AdminProvider>
+                <Routes>
+                  <Route path="" element={<AdminDashboard />} />
+                  <Route path="users" element={<AdminUsers />} />
+                  <Route path="charities" element={<AdminCharities />} />
+                  <Route path="draw" element={<AdminDraw />} />
+                  <Route path="results" element={<AdminResults />} />
+                </Routes>
+              </AdminProvider>
             </AdminRoute>
           }
         />

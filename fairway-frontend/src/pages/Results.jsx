@@ -35,12 +35,21 @@ export default function Results() {
     <MainLayout>
       <div className="max-w-5xl mx-auto space-y-8">
 
-        <h1 className="text-3xl font-bold text-center">
-          Your Results 🏆
-        </h1>
+        {/* HEADER */}
+        <div className="text-center space-y-2">
+          <h1 className="text-3xl font-bold">
+            Your Results 🏆
+          </h1>
+          <p className="text-textSecondary">
+            Check your performance and winnings
+          </p>
+        </div>
 
+        {/* STATES */}
         {loading ? (
-          <p className="text-center text-textSecondary">Loading...</p>
+          <p className="text-center text-textSecondary">
+            Loading results...
+          </p>
         ) : results.length === 0 ? (
           <p className="text-center text-textSecondary">
             No results yet
@@ -51,18 +60,20 @@ export default function Results() {
             {results.map((r) => (
               <div
                 key={r._id}
-                className="bg-[#111827] border border-gray-800 p-6 rounded-xl shadow-md"
+                className="bg-[#111827] border border-white/5 p-6 rounded-2xl hover:border-accent transition"
               >
 
-                {/* Draw Numbers */}
-                <div className="mb-4">
-                  <h2 className="text-lg mb-2">Draw Numbers</h2>
+                {/* DRAW NUMBERS */}
+                <div className="mb-5">
+                  <h2 className="text-sm text-textSecondary mb-2">
+                    Draw Numbers
+                  </h2>
 
-                  <div className="flex gap-3">
+                  <div className="flex gap-2 flex-wrap">
                     {r.drawId?.numbers?.map((num, i) => (
                       <div
                         key={i}
-                        className="w-10 h-10 flex items-center justify-center rounded-full bg-dark border border-gray-700"
+                        className="w-10 h-10 flex items-center justify-center rounded-full bg-gradient-to-br from-accent to-yellow-500 text-black font-bold shadow"
                       >
                         {num}
                       </div>
@@ -70,22 +81,28 @@ export default function Results() {
                   </div>
                 </div>
 
-                {/* Match + Prize */}
+                {/* STATS */}
                 <div className="flex justify-between items-center">
 
-                  <p>
-                    Matches:{" "}
-                    <span className="text-accent font-bold">
+                  {/* MATCHES */}
+                  <div>
+                    <p className="text-textSecondary text-sm">
+                      Matches
+                    </p>
+                    <p className="text-xl font-bold text-accent">
                       {r.matches}
-                    </span>
-                  </p>
+                    </p>
+                  </div>
 
-                  <p>
-                    Prize:{" "}
-                    <span className="text-green-500 font-bold">
+                  {/* PRIZE */}
+                  <div className="text-right">
+                    <p className="text-textSecondary text-sm">
+                      Prize Won
+                    </p>
+                    <p className="text-xl font-bold text-green-400">
                       ₹{r.prize}
-                    </span>
-                  </p>
+                    </p>
+                  </div>
 
                 </div>
 

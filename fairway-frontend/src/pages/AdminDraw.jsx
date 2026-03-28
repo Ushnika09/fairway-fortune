@@ -8,7 +8,6 @@ export default function AdminDraw() {
 
   const token = localStorage.getItem("token");
 
-  // RUN DRAW
   const handleRunDraw = async () => {
     try {
       setLoading(true);
@@ -22,7 +21,6 @@ export default function AdminDraw() {
       );
 
       setDraw(res.data.draw);
-
     } catch (err) {
       console.log(err);
       alert("Error running draw");
@@ -31,7 +29,6 @@ export default function AdminDraw() {
     }
   };
 
-  // PUBLISH DRAW
   const handlePublish = async () => {
     if (!draw?._id) return alert("Run draw first");
 
@@ -48,7 +45,6 @@ export default function AdminDraw() {
 
       alert("Draw published successfully 🚀");
       setDraw(null);
-
     } catch (err) {
       console.log(err);
       alert("Error publishing draw");
@@ -59,66 +55,75 @@ export default function AdminDraw() {
 
   return (
     <AdminLayout>
-      <div className="space-y-8">
+      <div className="space-y-6">
 
         {/* HEADER */}
         <div>
-          <h1 className="text-3xl font-bold">Draw Control 🎯</h1>
-          <p className="text-textSecondary mt-2">
-            Run and publish lottery draws
+          <h1 className="text-3xl font-bold">Draw System 🎯</h1>
+          <p className="text-textSecondary mt-1">
+            Generate and publish lucky draw results
           </p>
         </div>
 
-        {/* RUN DRAW */}
+        {/* RUN DRAW CARD */}
         <div className="bg-[#111827] border border-white/5 p-6 rounded-2xl space-y-4">
 
-          <h2 className="text-xl font-semibold">Run New Draw</h2>
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold">Run New Draw</h2>
+
+            <span className="text-xs text-yellow-400 bg-yellow-500/10 px-2 py-1 rounded-md">
+              Admin Action
+            </span>
+          </div>
 
           <button
             onClick={handleRunDraw}
-            className="bg-gradient-to-r from-accent to-yellow-500 text-black px-6 py-2 rounded-xl"
+            className="bg-gradient-to-r from-accent to-yellow-500 text-black px-6 py-2 rounded-xl font-medium hover:opacity-90 transition"
           >
             {loading ? "Generating..." : "Run Draw"}
           </button>
 
-          {/* SHOW NUMBERS */}
+          {/* DRAW NUMBERS */}
           {draw && (
-            <div className="mt-4 space-y-4">
+            <div className="mt-6 space-y-4">
 
-              <p className="text-textSecondary">Generated Numbers</p>
+              <p className="text-textSecondary text-sm">
+                Generated Numbers
+              </p>
 
-              <div className="flex gap-4 flex-wrap">
+              <div className="flex gap-3 flex-wrap">
                 {draw.numbers.map((n, i) => (
                   <div
                     key={i}
-                    className="w-12 h-12 flex items-center justify-center rounded-full bg-dark border border-white/10 text-lg font-bold"
+                    className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-accent to-yellow-500 text-black font-bold shadow-md"
                   >
                     {n}
                   </div>
                 ))}
               </div>
 
-              <span className="text-yellow-400 text-sm">
-                Status: Draft
-              </span>
+              <div className="flex items-center gap-2 text-xs">
+                <span className="text-yellow-400">●</span>
+                <span className="text-textSecondary">Draft Mode</span>
+              </div>
 
             </div>
           )}
         </div>
 
-        {/* PUBLISH */}
+        {/* PUBLISH CARD */}
         {draw && (
           <div className="bg-[#111827] border border-white/5 p-6 rounded-2xl space-y-4">
 
-            <h2 className="text-xl font-semibold">Publish Draw</h2>
+            <h2 className="text-lg font-semibold">Publish Draw</h2>
 
-            <p className="text-textSecondary">
-              This will calculate winners and distribute prizes.
+            <p className="text-textSecondary text-sm">
+              This will finalize results and distribute prizes to winners.
             </p>
 
             <button
               onClick={handlePublish}
-              className="bg-green-500 text-black px-6 py-2 rounded-xl"
+              className="bg-green-500 text-black px-6 py-2 rounded-xl font-medium hover:opacity-90 transition"
             >
               {loading ? "Publishing..." : "Publish Draw"}
             </button>
