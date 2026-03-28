@@ -12,6 +12,6 @@ router.post("/draw/publish", protect, adminOnly, publishDraw);
 
 router.get("/results", protect, adminOnly, getResults);
 router.post("/result/approve", protect, adminOnly, approveResult);
-router.get("/results", protect, adminOnly, getAllUsers);
+router.get("/users", protect, adminOnly, getAllUsers);
 
 export default router;
